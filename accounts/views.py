@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
+from django.views.generic.base import RedirectView
 from .forms import LoginForm
 from django.http.response import HttpResponse
+from django.contrib.auth import logout
 
 
 def home(request):
@@ -23,3 +25,13 @@ class LoginView(FormView):
             return redirect('home')
         else:
             return HttpResponse("Form is not valid")
+
+
+class LogoutView(RedirectView):
+    url = '/accounts/login'
+
+    def get_redirect_url(self, *args, **kwargs):
+        print(self.request.user.is_authenticated())
+        if self.request.user.is_authenticated():
+            logout(self.request)
+        return super(LogoutView, self).get_redirect_url(*args, **kwargs)
