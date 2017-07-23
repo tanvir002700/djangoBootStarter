@@ -4,10 +4,8 @@ from django.views.generic.base import RedirectView
 from .forms import LoginForm
 from django.http.response import HttpResponse
 from django.contrib.auth import logout
-
-
-def home(request):
-    return render(request, 'home.html')
+from django.core.urlresolvers import reverse
+from django.contrib.auth import login
 
 
 class LoginView(FormView):
@@ -22,7 +20,8 @@ class LoginView(FormView):
         form = LoginForm(request.POST)
         user = form.authenticate()
         if user:
-            return redirect('home')
+            login(request, user)
+            return redirect(reverse('dashboard:home'))
         else:
             return HttpResponse("Form is not valid")
 
@@ -33,5 +32,6 @@ class LogoutView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         print(self.request.user.is_authenticated())
         if self.request.user.is_authenticated():
+            print("going to logout")
             logout(self.request)
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)

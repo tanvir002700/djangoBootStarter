@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
 
@@ -13,3 +14,8 @@ class LoginForm(forms.Form):
 
             return authenticate(username=username, password=password)
 
+
+class RegisterForm(UserCreationForm):
+    def registered(self):
+        if self.is_valid():
+            user = self.save()
