@@ -1,0 +1,20 @@
+<form class="form-horizontal" method="post">
+    {% csrf_token %}
+    <fieldset>
+        {% for field in form %}
+            <div class="form-group text-center">
+                {{ field.errors }}
+                <label for="username" class="col-lg-2 control-label">{{ field.label }}: </label>
+                <div class="col-lg-8 col-lg-offset-1">
+                    {{ field }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group text-center">
+            <div class="col-lg-10">
+                <input class="btn btn-success btn-sm" type="submit" value="login"/>
+            </div>
+        </div>
+    </fieldset>
+</form>
