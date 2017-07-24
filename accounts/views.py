@@ -18,7 +18,7 @@ class RegisterView(FormView):
         if user:
             return redirect(reverse('accounts:login'))
         else:
-            return HttpResponse("Form is not valid")
+            return render(request, self.template_name, {'form': form})
 
 
 class LoginView(FormView):
@@ -36,7 +36,9 @@ class LoginView(FormView):
             login(request, user)
             return redirect(reverse('dashboard:home'))
         else:
-            return HttpResponse("Form is not valid")
+            form.errors['failed'] = 'didn'
+            print('Errrrrrrrrrrrro' + str(form.errors) + str(form.is_valid()) + str(user))
+            return render(request, self.template_name, {'form': form})
 
 
 class LogoutView(RedirectView):

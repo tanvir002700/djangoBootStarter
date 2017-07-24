@@ -8,7 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/base.css' %}">
-    <title>Document</title>
+    {% block head_content %}
+    {% endblock head_content %}
+    <title>{% block head_title%}Django{% endblock head_title %}</title>
 </head>
 <body>
     <h1>Base Template</h1>
