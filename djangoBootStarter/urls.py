@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from dashboard.views import HomeView
+
 
 urlpatterns = [
     url(r'^dashboard/', include('dashboard.urls', namespace='dashboard')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', HomeView.as_view(), name='root')
 ]
