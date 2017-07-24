@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic.base import RedirectView
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm,ProfileUpdateForm
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login
+from django.views.generic.edit import UpdateView
 
 
 class RegisterView(FormView):
@@ -49,3 +50,12 @@ class LogoutView(RedirectView):
             print("going to logout")
             logout(self.request)
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
+
+
+class ProfileUpdateView(UpdateView):
+    template_name = 'profile_update.html'
+    form_class = ProfileUpdateForm
+
+    def get_object(self, queryset=None):
+        return self.request.user
+

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
@@ -31,3 +33,9 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
