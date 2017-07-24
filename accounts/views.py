@@ -1,11 +1,24 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic.base import RedirectView
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 from django.http.response import HttpResponse
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login
+
+
+class RegisterView(FormView):
+    template_name = 'register.html'
+    form_class = RegisterForm
+
+    def post(self, request, *args, **kwargs):
+        form = RegisterForm(request.POST)
+        user = form.save()
+        if user:
+            return redirect(reverse('accounts:login'))
+        else:
+            return HttpResponse("Form is not valid")
 
 
 class LoginView(FormView):
