@@ -4,8 +4,9 @@ from django.contrib.auth import authenticate
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', required=True)
-    password = forms.CharField(label='Password', required=True)
+    username = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Password', required=True,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     def authenticate(self):
         if self.is_valid():
@@ -16,6 +17,17 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(UserCreationForm):
-    def registered(self):
-        if self.is_valid():
-            user = self.save()
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+    def save(self, commit=True):
+        if not self.is_valid():
+            return None
+        user = super(RegisterForm, self).save(commit=False)
+        if commit:
+            user.save()
+        return user

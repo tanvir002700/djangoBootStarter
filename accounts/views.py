@@ -1,11 +1,23 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic.base import RedirectView
-from .forms import LoginForm
-from django.http.response import HttpResponse
+from .forms import LoginForm, RegisterForm
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login
+
+
+class RegisterView(FormView):
+    template_name = 'register.html'
+    form_class = RegisterForm
+
+    def post(self, request, *args, **kwargs):
+        form = RegisterForm(request.POST)
+        user = form.save()
+        if user:
+            return redirect(reverse('accounts:login'))
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 class LoginView(FormView):
@@ -14,6 +26,7 @@ class LoginView(FormView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        print(form)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -23,7 +36,8 @@ class LoginView(FormView):
             login(request, user)
             return redirect(reverse('dashboard:home'))
         else:
-            return HttpResponse("Form is not valid")
+            form.errors['failed'] = 'authentication failed'
+            return render(request, self.template_name, {'form': form})
 
 
 class LogoutView(RedirectView):

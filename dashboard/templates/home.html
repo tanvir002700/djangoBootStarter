@@ -1,2 +1,6 @@
+{% extends 'main_layout.html' %}
+
+{% block body %}
 <h1>This is home page</h1>
-<a href="{% url 'accounts:logout' %}">Logout</a>
+<a href="{% url 'accounts:logout' %}" class="btn btn-info">Logout</a>
+{% endblock body %}
