@@ -1,20 +1,21 @@
-{% extends 'auth_layout.html' %}
+{% extends 'main_layout.html' %}
 
 {% block body %}
+
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             {% if form.errors %}
                 <div class="alert alert-dismissible alert-danger">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Oh snap!</strong> User name or Password not matched.
+                    {{ form.errors }}
                 </div>
             {% endif %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Log In</h3>
+                    <h3 class="panel-title">Update Profile</h3>
                 </div>
                 <div class="panel-body">
-                    {% include 'form_snippet.html' with form=form button='Login' %}
+                    {% include 'form_snippet.html' with form=form button='Update' %}
                 </div>
             </div>
         </div>
