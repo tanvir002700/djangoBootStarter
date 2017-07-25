@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login
 from django.views.generic.edit import UpdateView
+from django.views.generic.detail import DetailView
 
 
 class RegisterView(FormView):
@@ -62,3 +63,10 @@ class ProfileUpdateView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+
+class ProfileDetailView(DetailView):
+    template_name = 'profile_details.html'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
