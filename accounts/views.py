@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic.base import RedirectView
-from .forms import LoginForm, RegisterForm,ProfileUpdateForm
+from .forms import LoginForm, RegisterForm, ProfileUpdateForm
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login
