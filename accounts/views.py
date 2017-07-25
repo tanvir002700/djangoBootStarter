@@ -56,6 +56,9 @@ class ProfileUpdateView(UpdateView):
     template_name = 'profile_update.html'
     form_class = ProfileUpdateForm
 
+    def get_success_url(self):
+        return reverse('dashboard:home')
+
     def get_object(self, queryset=None):
         return self.request.user
 
