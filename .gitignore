@@ -142,3 +142,5 @@ ENV/
 # custom
 .idea
 .DS_Store
+
+media/**/*
