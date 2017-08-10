@@ -143,4 +143,4 @@ ENV/
 .idea
 .DS_Store
 
-/avatar/*
+media/**/*
