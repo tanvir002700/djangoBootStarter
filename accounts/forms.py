@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
 from django.contrib.auth import authenticate
+from .models import User
 
 
 class LoginForm(forms.Form):
@@ -24,6 +26,10 @@ class RegisterForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
 
+    class Meta:
+        model = User
+        fields = ("username", "email")
+
     def save(self, commit=True):
         if not self.is_valid():
             return None
@@ -31,3 +37,9 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'avatar']
