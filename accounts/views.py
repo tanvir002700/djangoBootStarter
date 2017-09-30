@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login
 from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class RegisterView(FormView):
@@ -53,7 +54,8 @@ class LogoutView(RedirectView):
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
 
 
-class ProfileUpdateView(UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'accounts:login'
     template_name = 'profile_update.html'
     form_class = ProfileUpdateForm
 
@@ -64,7 +66,8 @@ class ProfileUpdateView(UpdateView):
         return self.request.user
 
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'accounts:login'
     template_name = 'profile_details.html'
     context_object_name = 'user'
 
