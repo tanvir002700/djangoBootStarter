@@ -36,6 +36,8 @@ class LoginView(FormView):
         form = LoginForm(request.POST)
         user = form.authenticate()
         if user:
+            if request.POST.get('remember') is not None:
+                self.request.session.set_expiry(0)
             login(request, user)
             return redirect(reverse('dashboard:home'))
         else:
