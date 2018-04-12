@@ -9,6 +9,7 @@ class LoginForm(forms.Form):
     username = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Password', required=True,
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    remember = forms.BooleanField(label='Remember', widget=forms.CheckboxInput(attrs={'class': 'form-control'}))
 
     def authenticate(self):
         if self.is_valid():
